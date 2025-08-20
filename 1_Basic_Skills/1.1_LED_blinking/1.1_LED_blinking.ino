@@ -8,7 +8,7 @@
  ***************************************************/
 
 /*
-This is a variable to which we pass the number of pin that we connected the LED to. 
+This is a variable to which we pass the number of pin that we had connected the LED to. 
 The NULA board has a pin naming logic as follows: IO12, where 12 is the number that we give to the variable.
 If you wish to use a different pin, make sure you are using a IO__ marked pin. 
 */
@@ -20,7 +20,7 @@ Feel free to experiment with this value.
 */
 int delayMS=1000;
 
-void setup() {
+void setup() 
 
   /*
   pinMode() is a function that configures the specified pin to behave either as an input or in this case as an output.
@@ -38,7 +38,7 @@ void loop() {
   are represented by different voltage levels, high is 5V while low is 0V. We will start with putting the pin in HIGH
   mode, giving the LED 5V and lighting it up. 
   */
-  digitalWrite(12,HIGH);
+  digitalWrite(pinNumber,HIGH);
 
   /*
   delay() is a function that starts a pause in the code. Duration of the pause is defined with the ms parameter.
@@ -47,7 +47,7 @@ void loop() {
   delay(delayMS);
 
   //We put the pin in LOW mode, turning the LED off.
-  digitalWrite(12,LOW);
+  digitalWrite(pinNumber,LOW);
 
   //Leave the LED turned off for a bit.
   delay(delayMS);
