@@ -44,7 +44,11 @@ void setup() {
 
   */
   analogReadResolution(12);
-  Serial.begin(112500);
+
+  /*
+  analogWriteResolution() is a function that lets you change the PWM resolution (in bits). The default 
+  */
+  analogWriteResolution(12);
 }
 
 void loop() {
