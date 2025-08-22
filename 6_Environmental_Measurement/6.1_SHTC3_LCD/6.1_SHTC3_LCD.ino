@@ -1,25 +1,47 @@
-#include <Wire.h>
-#include "SHTC3-SOLDERED.h"
-#include "LCD-SOLDERED.h"
+/**
+ **************************************************
+ *
+ * @file        SHTC3_LCD_Display.ino
+ * @brief       Example that shows how to measure temperature and humidity with the SHTC3 sensor
+ *              and display the values both on the Serial Monitor and on a 16x2 LCD.
+ *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
+ * @author      Soldered
+ ***************************************************/
+
+#include <Wire.h>              // Include the I2C communication library
+#include "SHTC3-SOLDERED.h"    // Include the Soldered SHTC3 sensor library
+#include "LCD-SOLDERED.h"      // Include the Soldered LCD library
 
 // --- Sensor & LCD objects ---
-SHTC3 shtcSensor;
-LCD lcd(16, 2);   // 16x2 LCD
+SHTC3 shtcSensor;              // Create an SHTC3 sensor object
+LCD lcd(16, 2);                // Create a 16x2 LCD object
 
-// --- Update interval (ms) ---
-const unsigned long UPDATE_MS = 2000;
-unsigned long lastUpdate = 0;
+// --- Update interval (in milliseconds) ---
+const unsigned long UPDATE_MS = 2000;  // Time between sensor reads
+unsigned long lastUpdate = 0;          // Stores the last time we updated
 
 void setup() {
-  Wire.begin();                 // I2C
-  Serial.begin(115200);         // Serial monitor
+  /*
+  Start I2C communication. Both the SHTC3 sensor and the LCD use I2C.
+  */
+  Wire.begin();                
 
-  // Init SHTC3
-  if (!shtcSensor.begin()) {    // if your library's begin() returns bool; if not, just call it
+  /*
+  Start the Serial Monitor, used here for debugging and to show readings on the PC.
+  */
+  Serial.begin(115200);         
+
+  /*
+  Initialize the SHTC3 sensor. 
+  If initialization fails, we print a message to the Serial Monitor.
+  */
+  if (!shtcSensor.begin()) {    
     Serial.println("SHTC3 init failed!");
   }
 
-  // Init LCD
+  /*
+  Initialize the LCD, turn on the backlight, and show a starting message.
+  */
   lcd.begin();
   lcd.backlight();
   lcd.clear();
@@ -27,38 +49,46 @@ void setup() {
   lcd.print(F("SHTC3 + LCD"));
   lcd.setCursor(0, 1);
   lcd.print(F("Starting..."));
-  delay(800);
-  lcd.clear();
+  delay(800);       // Brief pause for the startup message
+  lcd.clear();      // Clear display before main loop begins
 }
 
 void loop() {
+  /*
+  millis() returns the number of milliseconds since the program started. 
+  Here we use it to update the sensor and LCD every UPDATE_MS milliseconds.
+  */
   unsigned long now = millis();
   if (now - lastUpdate >= UPDATE_MS) {
     lastUpdate = now;
 
-    // Take a measurement
+    /*
+    Take a new measurement from the sensor.
+    */
     shtcSensor.sample();
 
+    /*
+    Read temperature (in °C) and humidity (in %).
+    */
     float tC  = shtcSensor.readTempC();
     float hum = shtcSensor.readHumidity();
 
     // --- Serial output ---
     Serial.print("Temp: ");
-    Serial.print(tC, 2);
+    Serial.print(tC, 2);       // Print with 2 decimals
     Serial.print(" C, Hum: ");
-    Serial.print(hum, 2);
+    Serial.print(hum, 2);      // Print with 2 decimals
     Serial.println(" %");
 
-    // --- LCD output (no flicker) ---
+    // --- LCD output ---
     lcd.setCursor(0, 0);
-    lcd.print(("Temp: "));
-    lcd.print(tC, 1);      // one decimal fits nicely on 16 chars
-    lcd.print((" C   ")); // pad spaces to clear leftovers
+    lcd.print("Temp: ");
+    lcd.print(tC, 1);          // Print with 1 decimal (fits better)
+    lcd.print(" C   ");        // Extra spaces clear leftover characters
 
     lcd.setCursor(0, 1);
-    lcd.print(("Hum:  "));
+    lcd.print("Hum:  ");
     lcd.print(hum, 1);
-    lcd.print((" %   "));
+    lcd.print(" %   ");
   }
-
 }

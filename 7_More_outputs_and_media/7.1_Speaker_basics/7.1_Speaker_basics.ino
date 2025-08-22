@@ -1,3 +1,17 @@
+/**
+ **************************************************
+ *
+ * @file        Buzzer_Happy_Birthday.ino
+ * @brief       Example that shows how to play the "Happy Birthday" melody using a buzzer.
+ *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
+ * @author      Soldered
+ ***************************************************/
+
+/*
+These are frequency values for musical notes, expressed in Hertz (Hz). 
+For example, NOTE_C4 = 262 Hz corresponds to middle C. 
+They are used with the tone() function to generate the correct pitch on the buzzer.
+*/
 #define NOTE_B0  31
 #define NOTE_C1  33
 #define NOTE_CS1 35
@@ -88,45 +102,73 @@
 #define NOTE_D8  4699
 #define NOTE_DS8 4978
 
-// Define the buzzer pin
+/*
+This is the pin where the buzzer is connected.
+*/
 int buzzerPin = 8;
 
-// Define the "Happy Birthday" melody
+/*
+This array defines the melody of "Happy Birthday".
+Each value corresponds to a note frequency defined above.
+*/
 int melody[] = {
-  NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_G4, NOTE_C4, NOTE_D4, NOTE_E4,
-  NOTE_F4, NOTE_F4, NOTE_F4, NOTE_F4, NOTE_F4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_E4, NOTE_D4, NOTE_G4
+  NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4,
+  NOTE_G4, NOTE_C4, NOTE_D4, NOTE_E4,
+  NOTE_F4, NOTE_F4, NOTE_F4, NOTE_F4, NOTE_F4,
+  NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4,
+  NOTE_D4, NOTE_D4, NOTE_E4, NOTE_D4, NOTE_G4
 };
 
+/*
+This array defines the note duration values. 
+The number represents the note type: 
+- 4 = quarter note, 
+- 8 = eighth note, 
+- 2 = half note, etc.
+*/
 int noteDurations[] = {
-  8, 8, 4, 8, 8, 4, 8, 8, 8, 8, 2, 8, 8, 8, 8, 4, 8, 8, 8, 8, 4, 8, 8, 8, 2
+  8, 8, 4, 8, 8, 4, 8,
+  8, 8, 8, 2,
+  8, 8, 8, 8, 4,
+  8, 8, 8, 8, 4,
+  8, 8, 8, 2
 };
-// Note definitions for the melody
-#define NOTE_C4 262
-#define NOTE_D4 294
-#define NOTE_E4 330
-#define NOTE_F4 349
-#define NOTE_G4 392
-#define NOTE_A4 440
-#define NOTE_AS4 466
-#define NOTE_C5 523
 
 void setup() {
-  // Iterate over the notes of the melody:
-  for (int thisNote = 0; thisNote < 24; thisNote++) {
-    // To calculate the note duration, take one second divided by the note type.
+  /*
+  Iterate over each note in the melody.
+  */
+  for (int thisNote = 0; thisNote < 25; thisNote++) {
+
+    /*
+    Calculate the note duration in milliseconds. 
+    Example: 1000 / 4 = 250 ms for a quarter note.
+    */
     int noteDuration = 1000 / noteDurations[thisNote];
+
+    /*
+    tone() generates a square wave of the specified frequency (note) 
+    on the given pin for the specified duration.
+    */
     tone(buzzerPin, melody[thisNote], noteDuration);
 
-    // To distinguish the notes, set a minimum time between them.
+    /*
+    To separate notes and make them distinct, 
+    add a small pause between them (30% longer than the note duration).
+    */
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
 
-    // Stop the tone playing:
+    /*
+    Stop the tone before moving on to the next note.
+    */
     noTone(buzzerPin);
   }
 }
 
 void loop() {
-  // No need to repeat the melody in the loop for this example.
-  // The setup() is enough to play it once.
+  /*
+  No code is needed here because the melody already plays once in setup().
+  If you want the melody to repeat, you can move the for-loop into loop().
+  */
 }
