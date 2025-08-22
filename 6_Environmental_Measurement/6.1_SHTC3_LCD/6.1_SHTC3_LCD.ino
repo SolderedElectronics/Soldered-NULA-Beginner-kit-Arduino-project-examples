@@ -8,7 +8,6 @@
  * @author      Soldered
  ***************************************************/
 
-#include <Wire.h>              // Include the I2C communication library
 #include "SHTC3-SOLDERED.h"    // Include the Soldered SHTC3 sensor library
 #include "LCD-SOLDERED.h"      // Include the Soldered LCD library
 
@@ -46,9 +45,9 @@ void setup() {
   lcd.backlight();
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print(F("SHTC3 + LCD"));
+  lcd.print("SHTC3 + LCD");
   lcd.setCursor(0, 1);
-  lcd.print(F("Starting..."));
+  lcd.print("Starting...");
   delay(800);       // Brief pause for the startup message
   lcd.clear();      // Clear display before main loop begins
 }

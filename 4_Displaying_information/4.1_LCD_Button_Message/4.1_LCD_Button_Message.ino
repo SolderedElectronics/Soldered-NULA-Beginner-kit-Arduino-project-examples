@@ -33,9 +33,8 @@ void setup() {
   */
   lcd.begin();
 
-  /*
-  Turn on the LCD backlight (if the display module supports it). 
-  */
+  
+  //Turn on the LCD backlight (if the display module supports it). 
   lcd.backlight(); 
 }
 
@@ -56,7 +55,7 @@ void loop() {
   */
   if (reading == HIGH) {
     lcd.setCursor(0,0);                 // Set cursor to column 0, row 0
-    lcd.print(F("Button pressed!"));    // Print the message
+    lcd.print("Button pressed!");    // Print the message
   } 
   else {
     /*
