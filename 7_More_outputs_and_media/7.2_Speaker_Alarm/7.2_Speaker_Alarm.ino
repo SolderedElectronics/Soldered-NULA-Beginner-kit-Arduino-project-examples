@@ -1,7 +1,7 @@
 /**
  **************************************************
  *
- * @file        Buzzer_Funky_Song_Button.ino
+ * @file        7.2_Speaker_Alarm.ino
  * @brief       Example that plays a funky melody on the buzzer when a button is pressed. 
  *              The melody is defined as a sequence of notes and durations. 
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>

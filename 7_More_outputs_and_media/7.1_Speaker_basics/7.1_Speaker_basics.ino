@@ -1,7 +1,7 @@
 /**
  **************************************************
  *
- * @file        Buzzer_Happy_Birthday.ino
+ * @file        7.1_Speaker_basics.ino
  * @brief       Example that shows how to play the "Happy Birthday" melody using a buzzer.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
  * @author      Soldered
@@ -112,11 +112,10 @@ This array defines the melody of "Happy Birthday".
 Each value corresponds to a note frequency defined above.
 */
 int melody[] = {
-  NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4,
-  NOTE_G4, NOTE_C4, NOTE_D4, NOTE_E4,
-  NOTE_F4, NOTE_F4, NOTE_F4, NOTE_F4, NOTE_F4,
-  NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4,
-  NOTE_D4, NOTE_D4, NOTE_E4, NOTE_D4, NOTE_G4
+  NOTE_C4, NOTE_C4, NOTE_D4, NOTE_C4, NOTE_F4, NOTE_E4, // "Happy Birthday to You"
+  NOTE_C4, NOTE_C4, NOTE_D4, NOTE_C4, NOTE_G4, NOTE_F4, // "Happy Birthday to You"
+  NOTE_C4, NOTE_C4, NOTE_C5, NOTE_A4, NOTE_F4, NOTE_E4, NOTE_D4, // "Happy Birthday dear [Name]"
+  NOTE_AS4, NOTE_AS4, NOTE_A4, NOTE_F4, NOTE_G4, NOTE_F4 // "Happy Birthday to You"
 };
 
 /*
@@ -127,11 +126,10 @@ The number represents the note type:
 - 2 = half note, etc.
 */
 int noteDurations[] = {
-  8, 8, 4, 8, 8, 4, 8,
-  8, 8, 8, 2,
-  8, 8, 8, 8, 4,
-  8, 8, 8, 8, 4,
-  8, 8, 8, 2
+  4, 4, 4, 4, 4, 2,
+  4, 4, 4, 4, 4, 2,
+  4, 4, 4, 4, 4, 4, 2,
+  4, 4, 4, 4, 4, 2
 };
 
 void setup() {
