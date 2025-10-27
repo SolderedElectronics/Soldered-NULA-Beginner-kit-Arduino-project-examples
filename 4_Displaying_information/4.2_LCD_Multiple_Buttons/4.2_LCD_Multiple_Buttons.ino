@@ -24,9 +24,9 @@ These are the button pins:
 - Button 2 increments a counter.
 - Button 3 shows a progress bar animation.
 */
-const int BTN1 = 3;  
-const int BTN2 = 4;  
-const int BTN3 = 5;  
+const int BTN1 = 2;  
+const int BTN2 = 3;  
+const int BTN3 = 4;  
 
 /*
 This variable stores the counter value for Button 2.

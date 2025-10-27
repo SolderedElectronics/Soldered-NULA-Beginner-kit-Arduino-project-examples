@@ -9,10 +9,10 @@
 
 /*
 This is a variable to which we pass the number of pin that we had connected the LED to. 
-The NULA board has a pin naming logic as follows: IO12, where 12 is the number that we give to the variable.
+The NULA board has a pin naming logic as follows: IO4, where 4 is the number that we give to the variable.
 If you wish to use a different pin, make sure you are using a IO__ marked pin. 
 */
-int pinNumber = 12;
+int pinNumber = 4;
 
 /*
 This is a variable that defines the blinking time, in milliseconds.
@@ -20,7 +20,7 @@ Feel free to experiment with this value.
 */
 int delayMS=1000;
 
-void setup() 
+void setup() {
 
   /*
   pinMode() is a function that configures the specified pin to behave either as an input or in this case as an output.

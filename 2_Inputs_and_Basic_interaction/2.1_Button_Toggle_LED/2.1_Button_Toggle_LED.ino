@@ -9,17 +9,17 @@
 
 /*
 This is a variable to which we pass the number of pin that we had connected the BUTTON to.
-The NULA board has a pin naming logic as follows: IO2, where 2 is the number that we give to the variable.
+The NULA board has a pin naming logic as follows: IO19, where 19 is the number that we give to the variable.
 If you wish to use a different pin, make sure you are using a IO__ marked pin. 
 */
-const int BUTTON_PIN = 2;
+const int BUTTON_PIN = 19;
 
 /*
 This is a variable to which we pass the number of pin that we had connected the LED to. 
-The NULA board has a pin naming logic as follows: IO12, where 12 is the number that we give to the variable.
+The NULA board has a pin naming logic as follows: IO4, where 4 is the number that we give to the variable.
 If you wish to use a different pin, make sure you are using a IO__ marked pin. 
 */
-const int LED_PIN = 12;
+const int LED_PIN = 4;
 
 /*
 Those are the variables used for button debouncing. To learn more about button debouncing, check out our example

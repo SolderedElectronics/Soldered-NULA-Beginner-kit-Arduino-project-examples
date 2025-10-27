@@ -3,8 +3,7 @@
 #define ECHOPIN 3
 #define TRIGPIN 2
 
-Ultrasonic_Sensor hc(TRIGPIN,ECHOPIN); //Initializer for sensor without easyC
-
+Ultrasonic_Sensor hc(TRIGPIN, ECHOPIN); //Initializer for sensor without easyC
 void setup()
 {
   Serial.begin(115200);  //Begin serial communication with PC via UART
