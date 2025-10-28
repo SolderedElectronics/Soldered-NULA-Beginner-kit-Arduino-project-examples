@@ -9,8 +9,8 @@
  ***************************************************/
 
 // --- Pin definitions ---
-const int buzzerPin = 8;   // Pin where the buzzer is connected
-const int buttonPin = 2;   // Pin where the button is connected
+const int buzzerPin = 2;   // Pin where the buzzer is connected
+const int buttonPin = 3;   // Pin where the button is connected
 
 /*
 Define note frequencies (in Hz) for the tones used in this melody.

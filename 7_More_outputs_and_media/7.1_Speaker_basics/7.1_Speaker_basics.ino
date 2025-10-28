@@ -105,7 +105,7 @@ They are used with the tone() function to generate the correct pitch on the buzz
 /*
 This is the pin where the buzzer is connected.
 */
-int buzzerPin = 8;
+int buzzerPin = 2;
 
 /*
 This array defines the melody of "Happy Birthday".
