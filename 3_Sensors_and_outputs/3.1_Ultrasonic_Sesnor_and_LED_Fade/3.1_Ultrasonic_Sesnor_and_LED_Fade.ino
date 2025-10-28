@@ -33,8 +33,6 @@ void setup()
   hc.begin();             // Initialize ultrasonic sensor
 
   pinMode(LEDPIN, OUTPUT); // Set LED pin as output
-
-  Serial.println("Ultrasonic LED Brightness Control started");
 }
 
 void loop()
