@@ -1,14 +1,14 @@
 /**
  **************************************************
  *
- * @file        ESP32C6_LED_Control.ino
- * @brief       Example that shows how to control an LED on the ESP32C6
+ * @file        5.2_Web_LED_Control.ino
+ * @brief       Example that shows how to control an LED on the NULA MINI
  *              board through a Wi-Fi web interface. The web page allows
  *              the user to:
  *                - Turn the LED ON or OFF using buttons.
  *                - See the real-time LED status automatically updated.
  *
- *              The ESP32C6 runs a small web server that serves a simple
+ *              The NULA MINI runs a small web server that serves a simple
  *              HTML page and handles HTTP requests from the browser.
  *
  *              For wiring details and more information, check the example
@@ -24,8 +24,8 @@
 Wi-Fi credentials.
 Change these to match your Wi-Fi network name (SSID) and password.
 */
-const char* ssid = "Your SSID";
-const char* password = "Your passwords";
+const char* ssid = "Stefan";
+const char* password = "granatir";
 
 /*
 Pin number where the LED is connected.
@@ -38,7 +38,7 @@ Create a web server object that listens on port 80 (default HTTP port).
 WebServer server(80);
 
 /*
-HTML content that will be sent to the browser when the user visits the ESP32C6’s IP address.
+HTML content that will be sent to the browser when the user visits the NULA MINI’s IP address.
 This page includes:
 - Two buttons (ON / OFF)
 - Automatic status updates using JavaScript
@@ -48,7 +48,7 @@ const char htmlPage[] PROGMEM = R"rawliteral(
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ESP32C6 LED Control</title>
+  <title>NULA MINI LED Control</title>
   <style>
     body { font-family: Arial; text-align: center; margin-top: 50px; }
     button { padding: 15px 30px; margin: 10px; font-size: 20px; }
@@ -56,13 +56,13 @@ const char htmlPage[] PROGMEM = R"rawliteral(
   </style>
 </head>
 <body>
-  <h1>ESP32C6 LED Control</h1>
+  <h1>NULA MINI LED Control</h1>
   <button onclick="fetch('/led/on').then(()=>updateStatus())">ON</button>
   <button onclick="fetch('/led/off').then(()=>updateStatus())">OFF</button>
   <div class="status" id="status">Loading status...</div>
 
   <script>
-    // Function that requests LED status from the ESP32 and updates the page
+    // Function that requests LED status from the NULA MINI and updates the page
     async function updateStatus() {
       let res = await fetch('/led/status');
       let text = await res.text();

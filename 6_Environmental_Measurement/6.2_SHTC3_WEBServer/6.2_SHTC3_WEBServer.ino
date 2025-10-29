@@ -1,7 +1,7 @@
 /**
  **************************************************
  *
- * @file        SHTC3_WebServer.ino
+ * @file        6.2_SHTC3_WebServer.ino
  * @brief       Example showing how to measure temperature and humidity with the
  *              SHTC3 sensor and display the readings on a self-hosted web page.
  *              The NULA MINI connects to a local Wi-Fi network, starts a web
@@ -35,7 +35,7 @@ const char MAIN_page[] PROGMEM = R"rawliteral(
 <html>
 <head>
   <meta charset="utf-8">
-  <title>ESP32-C6 SHTC3 Live Data</title>
+  <title>NULA MINI SHTC3 Live Data</title>
   <style>
     body { font-family: Arial; text-align: center; background: #f4f4f4; }
     h1 { color: #333; margin-top: 40px; }
@@ -43,7 +43,7 @@ const char MAIN_page[] PROGMEM = R"rawliteral(
   </style>
 </head>
 <body>
-  <h1>ESP32-C6 SHTC3 Sensor</h1>
+  <h1>NULA MINI SHTC3 Sensor</h1>
   <p>Temperature: <span id="temp" class="value">--</span> °C</p>
   <p>Humidity: <span id="hum" class="value">--</span> %</p>
   <p style="font-size:0.9em;color:#777;">(Updates automatically every 2 seconds)</p>

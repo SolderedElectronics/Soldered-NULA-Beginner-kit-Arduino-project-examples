@@ -1,7 +1,7 @@
 /**
  **************************************************
  *
- * @file        LCD_WiFi_Time_Display.ino
+ * @file        WiFi_connection_LCD_time.ino
  * @brief       Example that shows how to connect to Wi-Fi and display the current time on an LCD using NTP:
  *              - Connects to a Wi-Fi network.
  *              - Fetches the current time from an online NTP (Network Time Protocol) server.
@@ -17,8 +17,8 @@
 #include <NTPClient.h>      // Include NTP client library to get time from the internet
 
 // Replace these values with your WiFi credentials
-const char* ssid = "Your SSID";     
-const char* password = "Your password";
+const char* ssid = "Soldered";     
+const char* password = "dasduino";
 
 /*
 Create an LCD object with 16 columns and 2 rows.
