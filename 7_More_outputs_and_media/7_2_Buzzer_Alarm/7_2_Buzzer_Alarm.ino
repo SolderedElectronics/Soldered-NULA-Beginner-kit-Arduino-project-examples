@@ -1,14 +1,14 @@
 /**
  **************************************************
  *
- * @file        7.2_Speaker_Alarm.ino
+ * @file        7.2_Buzzer_Alarm.ino
  * @brief       Example that plays a funky melody on the buzzer when a button is pressed. 
  *              The melody is defined as a sequence of notes and durations. 
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
  * @author      Soldered
  ***************************************************/
 
-// --- Pin definitions ---
+
 const int buzzerPin = 2;   // Pin where the buzzer is connected
 const int buttonPin = 3;   // Pin where the button is connected
 
