@@ -1,7 +1,7 @@
 /**
  **************************************************
  *
- * @file        5.2_Web_LED_Control.ino
+ * @file        6.2_Web_LED_Control.ino
  * @brief       Example that shows how to control an LED on the NULA MINI
  *              board through a Wi-Fi web interface. The web page allows
  *              the user to:
@@ -19,13 +19,14 @@
 
 #include <WiFi.h>          // Include Wi-Fi library for network connection
 #include <WebServer.h>     // Include WebServer library to host a simple web server
+#include <ESPmDNS.h>       // Include mDNS library for local hostname (nulamini.local)
 
 /*
 Wi-Fi credentials.
 Change these to match your Wi-Fi network name (SSID) and password.
 */
-const char* ssid = "Stefan";
-const char* password = "granatir";
+const char* ssid = "your ssid";
+const char* password = "your password";
 
 /*
 Pin number where the LED is connected.
@@ -138,6 +139,13 @@ void setup() {
   Serial.println("\nWiFi connected!");
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());     // Display the ESP32’s IP address
+
+  if(MDNS.begin("nulamini")){
+    Serial.println("mDNS responder started!");
+    Serial.println("Access the board in your browser at: http://nulamini.local/");
+  } else {
+    Serial.println("Error starting mDNS responder!");
+  }
 
   /*
   Define routes (URLs) and their corresponding functions.

@@ -1,8 +1,10 @@
 /*
  **************************************************
  *
- * @file        Button_Toggle_LED.ino
- * @brief       Example that shows how to toggle LED light with a press of a button
+ * @file        2.2_Button_Debounce.ino
+ * @brief       Example that shows how to toggle LED light with a press of a button. 
+ *              In this example we will be using a button reading technique called debouncing. This technique gives us
+ *              an easy way to stabilize the button readings.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
  * @author      Soldered
  ***************************************************/
