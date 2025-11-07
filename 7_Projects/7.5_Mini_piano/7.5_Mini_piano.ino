@@ -1,7 +1,7 @@
 /**
  **************************************************
  *
- * @file        8.5_Mini_piano.ino
+ * @file        7.5_Mini_piano.ino
  * @brief       Example project that creates a simple piano using 4 buttons and a passive buzzer.  
  *              Each button has it's own frequency that is played when pressed. 
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
