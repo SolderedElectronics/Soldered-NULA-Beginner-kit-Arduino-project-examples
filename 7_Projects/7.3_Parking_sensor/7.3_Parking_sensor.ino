@@ -1,11 +1,13 @@
 /**
  **************************************************
  *
- * @file        3.2_Ultrasonic_sensor_and_buzzer.ino
+ * @file        7.3_Parking_sensor.ino
  * @brief       Example showing how to use the HC-SR04 ultrasonic sensor
- *              with a passive buzzer to create a simple reverse-parking
- *              warning system. The buzzer beeps faster as the object
- *              gets closer to the sensor.
+ *              with a passive buzzer and an LED to create a simple
+ *              reverse-parking warning system. The buzzer beeps faster
+ *              as the object gets closer to the sensor, and the LED
+ *              lights up when the distance is below 10 cm.
+ *
  * @author      Soldered
  ***************************************************
  */
@@ -16,6 +18,7 @@
 #define TRIGPIN     4       // Trigger pin for the HC-SR04
 #define ECHOPIN     3       // Echo pin for the HC-SR04
 #define BUZZER_PIN  2       // Passive buzzer pin
+#define LED_PIN     5       // LED warning indicator pin
 
 // --- Create ultrasonic sensor object ---
 Ultrasonic_Sensor hc(TRIGPIN, ECHOPIN);
@@ -32,9 +35,12 @@ void setup()
 {
   Serial.begin(115200);   // Start serial communication
   hc.begin();             // Initialize ultrasonic sensor
-  pinMode(BUZZER_PIN, OUTPUT);
 
-  Serial.println("Passive-buzzer reverse sensor started");
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
+  digitalWrite(LED_PIN, LOW); // Ensure LED is off initially
+
+  Serial.println("Ultrasonic buzzer + LED reverse sensor started");
 }
 
 void loop()
@@ -48,9 +54,12 @@ void loop()
   Serial.print(distance);
   Serial.println(" cm");
 
-  // --- Decide buzzer behaviour based on distance ---
+  // --- Default LED state ---
+  digitalWrite(LED_PIN, LOW);
+
+  // --- Decide buzzer and LED behavior based on distance ---
   if (distance > 100) {
-    // Far away: no sound
+    // Far away: no sound, LED off
     beepInterval = 0;
     noTone(BUZZER_PIN);
   }
@@ -67,9 +76,10 @@ void loop()
     beepInterval = 150;
   }
   else {
-    // Closer than 10 cm → continuous tone
+    // Closer than 10 cm → continuous tone + LED ON
     tone(BUZZER_PIN, TONE_FREQ);
     beepInterval = 0;
+    digitalWrite(LED_PIN, HIGH);
   }
 
   // --- Handle timed beeping ---
