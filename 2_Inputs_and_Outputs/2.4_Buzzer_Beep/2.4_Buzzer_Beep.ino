@@ -11,38 +11,68 @@
 
 /*
 This is a variable to which we assign the number of the pin that we connected the buzzer to.
-In this example, we’ll use IO5 as the output pin. If you want, you can use any other digital pin that has ADC capabilities.
+The NULA board has a pin naming logic as follows: IO5, where 5 is the number that we give to the variable.
+If you wish to use a different pin, make sure you are using a IO__ marked pin.
 */
 const int BUZZER_PIN = 5;
 
 /*
-We will use two arrays — one for note frequencies (in Hertz) and one for note durations.
+We will use two arrays - one for note frequencies (in Hertz) and one for note durations.
 These define a short melody that the buzzer will play.
 */
 int melody[] = { 262, 294, 330, 349, 392, 440, 494, 523 }; // C4 to C5
 int noteDuration[] = { 4, 4, 4, 4, 4, 4, 4, 2 };           // Quarter notes (last one is half note)
 
 void setup() {
+
   /*
-  The tone() function generates a square wave of a given frequency (and duration)
-  on a specific pin, which makes the buzzer produce sound.
+  pinMode() is a function that configures the specified pin to behave either as an input or in this case as an output.
+  As our pin needs to drive the buzzer, we will put the pin in OUTPUT mode.
   */
   pinMode(BUZZER_PIN, OUTPUT);
+
+  /*
+  Serial.begin() establishes serial communication between your board and your computer via a USB cable. We use it here
+  to let you know when the melody starts and when it is done.
+  */
   Serial.begin(115200);
   Serial.println("Playing melody...");
-  
-  // Loop through the melody and play each note
+
+  /*
+  A for loop repeats a block of code a set number of times, counting with a variable of its own. Here "i" starts at 0
+  and grows by one each pass until it reaches 8, which is how many notes our melody has, so the block below runs once
+  for every note.
+  */
   for (int i = 0; i < 8; i++) {
-    int duration = 1000 / noteDuration[i];  // Convert duration type to milliseconds
-    tone(BUZZER_PIN, melody[i], duration);  // Play the note
-    delay(duration * 1.3);                  // Wait a bit before the next note
+
+    /*
+    Musical note lengths are written as fractions: a quarter note is a quarter of a whole note. Here we turn that
+    fraction into milliseconds by dividing one second by the number in the array, so a 4 becomes 250 ms and a 2
+    becomes 500 ms.
+    */
+    int duration = 1000 / noteDuration[i];
+
+    /*
+    tone() is a function that makes the buzzer produce a sound. It generates a square wave of the given frequency,
+    which our ears hear as the pitch of the note, and the third value tells it how long to keep playing.
+    */
+    tone(BUZZER_PIN, melody[i], duration);
+
+    /*
+    delay() is a function that starts a pause in the code. We wait slightly longer than the note itself, which leaves a
+    short silence between notes so they do not run into each other. Feel free to experiment with the 1.3.
+    */
+    delay(duration * 1.3);
   }
 
-  // Stop tone when done
+  /*
+  noTone() stops whatever sound the buzzer was making. The last note already ended on its own, but calling this makes
+  sure the buzzer is left silent no matter what.
+  */
   noTone(BUZZER_PIN);
   Serial.println("Melody finished!");
 }
 
 void loop() {
-  // Nothing happens here — melody plays once in setup()
+  // Nothing happens here - melody plays once in setup()
 }

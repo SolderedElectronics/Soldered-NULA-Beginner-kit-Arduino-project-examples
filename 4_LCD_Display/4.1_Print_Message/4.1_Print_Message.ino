@@ -1,7 +1,7 @@
 /**
  **************************************************
  *
- * @file        Print_Message.ino
+ * @file        4.1_Print_Message.ino
  * @brief       Example that shows how to display a message on an LCD screen.
  *              The LCD is controlled using the Soldered LCD library.
  *              This example demonstrates the basics of initializing the display and printing text.

@@ -48,7 +48,7 @@ void loop() {
   /*
   digitalRead() is a function that reads the value from a specified digital pin, either HIGH or LOW.
   When the button is pressed, it connects the pin to 3.3V, and the board reads HIGH.
-  When it’s released, the pin is connected to GND through a pull-down resistor and reads LOW.
+  When it's released, the pin is connected to GND through a pull-down resistor and reads LOW.
   */
   bool reading = digitalRead(BUTTON_PIN);
 

@@ -1,11 +1,12 @@
 /**
  **************************************************
  *
- * @file        LED_blinking.ino
+ * @file        1.2_LED_blinking.ino
  * @brief       Example that shows how to control the blinking of a simple LED.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
  * @author      Soldered
- ***************************************************/
+ ***************************************************
+ */
 
 /*
 This is a variable to which we pass the number of pin that we had connected the LED to. 
@@ -18,7 +19,7 @@ int pinNumber = 4;
 This is a variable that defines the blinking time, in milliseconds.
 Feel free to experiment with this value.
 */
-int delayMS=1000;
+int delayMS = 1000;
 
 void setup() {
 
@@ -27,7 +28,7 @@ void setup() {
   This simply means that the pin "reads" the available data when in input mode, and "writes" data when in output mode.
   As our pin needs to turn on the LED, we will put the pin in OUTPUT mode.
   */
-  pinMode(pinNumber,OUTPUT);
+  pinMode(pinNumber, OUTPUT);
 }
 
 void loop() {
@@ -35,10 +36,10 @@ void loop() {
   /*
   digitalWrite() is a function that gives us the ability to change the value that our pin (previously set as OUTPUT pin) 
   writes. As the name of the function tells us, we can only switch between digital values, high and low. Those values
-  are represented by different voltage levels, high is 5V while low is 0V. We will start with putting the pin in HIGH
-  mode, giving the LED 5V and lighting it up. 
+  are represented by different voltage levels. On the NULA board, high is 3.3V while low is 0V. We will start with putting the pin in HIGH
+  mode, giving the LED 3.3V and lighting it up. 
   */
-  digitalWrite(pinNumber,HIGH);
+  digitalWrite(pinNumber, HIGH);
 
   /*
   delay() is a function that starts a pause in the code. Duration of the pause is defined with the ms parameter.
@@ -47,7 +48,7 @@ void loop() {
   delay(delayMS);
 
   //We put the pin in LOW mode, turning the LED off.
-  digitalWrite(pinNumber,LOW);
+  digitalWrite(pinNumber, LOW);
 
   //Leave the LED turned off for a bit.
   delay(delayMS);

@@ -1,11 +1,12 @@
 /**
  **************************************************
  *
- * @file        Serial_Print_Hello_World.ino
+ * @file        1.1_Hello_World.ino
  * @brief       Example that shows basic functionality of the Serial Monitor, writing data only.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
  * @author      Soldered
- ***************************************************/
+ ***************************************************
+ */
 
 void setup() {
   /*
@@ -17,7 +18,7 @@ void setup() {
 
   /*
   Serial.println() Prints data to serial port as human-readable ASCII text followed by a carriage return character ('\r')
-  and a newLine character ('\n'). In other words, function prints the text and then skips to the next line.
+  and a newline character ('\n'). In other words, function prints the text and then skips to the next line.
   */
   Serial.println("Hello, World!");
 }

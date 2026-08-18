@@ -1,4 +1,4 @@
-/*
+/**
  **************************************************
  *
  * @file        2.2_Button_Debounce.ino
@@ -7,7 +7,8 @@
  *              an easy way to stabilize the button readings.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
  * @author      Soldered
- ***************************************************/
+ ***************************************************
+ */
 
 /*
 This is a variable to which we pass the number of pin that we had connected the BUTTON to.
@@ -56,13 +57,13 @@ void loop() {
 
   /*
   millis() is a function that returns the number of milliseconds passed since the board began running the current program.
-  In this example, we use this function to check out if the debouncing period has finnished. This number will overflow 
+  In this example, we use this function to check out if the debouncing period has finished. This number will overflow 
   (go back to zero), after approximately 50 days.
   */
   unsigned long now = millis();
  
   /*
-  This is our debouncing logic, we check is the button has been pressed and if enough time has passed so that we dont get 
+  This is our debouncing logic, we check if the button has been pressed and if enough time has passed so that we don't get 
   false readings because of the noise in the signal.
   */
   if (reading != lastState && (now - lastChangeMs) > debounceMs) {
