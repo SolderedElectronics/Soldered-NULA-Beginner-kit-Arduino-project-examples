@@ -16,6 +16,10 @@
 This is a variable to which we assign the number of the pin that we connected the photoresistor's output to.
 The NULA MINI board uses analog-capable pins (ADC pins) to read varying voltages. 
 In this example, we will use IO5, which supports analog input.
+
+This example also needs a 10k resistor. A photoresistor changes its resistance with light, but the board can only
+measure a voltage, so we pair the two in what is called a voltage divider: the fixed resistor turns the changing
+resistance into a changing voltage that the board can read.
 */
 const int LDR_PIN = 5;  // Analog input pin for photoresistor
 

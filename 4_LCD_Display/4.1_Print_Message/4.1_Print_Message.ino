@@ -1,3 +1,4 @@
+
 /**
  **************************************************
  *
@@ -38,10 +39,11 @@ void setup() {
   lcd.print("Hello, NULA!");
 
   /*
-  Move to the second line and print another message.
+  Move to the second line and print another message. Keep in mind that this display fits exactly 16 characters per row,
+  so anything longer is simply cut off at the edge. Count the characters of your own messages before printing them.
   */
   lcd.setCursor(0, 1);
-  lcd.print("Let's get started!");
+  lcd.print("Let's start!");
 }
 
 void loop() {

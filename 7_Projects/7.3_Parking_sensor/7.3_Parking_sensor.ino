@@ -18,34 +18,33 @@ call instead of timing the echo ourselves.
 #include "Ultrasonic-distance-sensor-easyC-SOLDERED.h"
 
 /*
-This is a variable to which we pass the number of pin that we had connected the sensor's TRIG pin to, the pin the
-board uses to tell the sensor to send out an ultrasonic pulse.
-The NULA board has a pin naming logic as follows: IO4, where 4 is the number that we give to the variable.
-If you wish to use a different pin, make sure you are using a IO__ marked pin.
-*/
-const int TRIGPIN = 4;
-
-/*
-This is a variable to which we pass the number of pin that we had connected the sensor's ECHO pin to, the pin on which
-the sensor reports back how long it took for the pulse to return.
-*/
-const int ECHOPIN = 3;
-
-/*
 This is a variable to which we pass the number of pin that we had connected the buzzer to.
+The NULA board has a pin naming logic as follows: IO2, where 2 is the number that we give to the variable.
+If you wish to use a different pin, make sure you are using a IO__ marked pin.
 */
 const int BUZZER_PIN = 2;
 
 /*
 This is a variable to which we pass the number of pin that we had connected the warning LED to.
+
+Remember that the LED needs a 330 Ohm resistor in series with it. That resistor limits how much current flows, and
+without it the LED draws more than either it or the pin is built for, so both can be damaged.
 */
 const int LED_PIN = 5;
 
 /*
-Here we create our sensor object, which we named "hc". We pass it the two pin numbers we defined above, in the order
-TRIG first and ECHO second, so the library knows how the sensor is wired to the board.
+Here we create our sensor object, which we named "hc". The sensor connects over easyC, which is Soldered's name for an
+I2C connection over a single cable, so we pass no pin numbers: I2C always uses the same two pins on the board (IO6 and
+IO7 on the NULA board) and the library already knows to look there.
 */
-Ultrasonic_Sensor hc(TRIGPIN, ECHOPIN);
+Ultrasonic_Sensor hc;
+
+/*
+This is how long we wait after asking for a measurement, in milliseconds. The sensor gives up listening for an echo
+after 38 milliseconds, so waiting a little longer than that means the answer is always ready when we ask for it.
+This wait also sets the pace of the whole loop, which is why there is no delay() at the bottom of it.
+*/
+const int MEASURE_WAIT_MS = 50;
 
 /*
 This is the frequency of the warning sound, in Hertz. A frequency is how many times per second the buzzer moves back
@@ -72,7 +71,8 @@ void setup()
   Serial.begin(115200);
 
   /*
-  begin() prepares the sensor for use, setting the TRIG pin as an output and the ECHO pin as an input for us.
+  begin() prepares the sensor for use. For an easyC sensor this starts the I2C communication and tells the library which
+  address to talk to, which for this sensor is 0x30.
   */
   hc.begin();
 
@@ -92,16 +92,30 @@ void setup()
 void loop()
 {
   /*
-  getDistance() is a function that makes the sensor take one measurement and returns the result in centimeters.
+  Reading an easyC sensor takes two steps. takeMeasure() asks the sensor to send out a pulse and time the echo, and the
+  wait afterwards gives it the moment it needs to finish that work and store the answer.
   */
-  float distance = hc.getDistance();
+  hc.takeMeasure();
+  delay(MEASURE_WAIT_MS);
 
   /*
-  getDuration() returns the raw travel time of the echo in microseconds, before it is converted into a distance.
-  We only read it here so you can see the number the sensor actually gives us. Keep in mind that calling it sends out
-  a second ultrasonic pulse, so if you don't need this value you can safely delete this line.
+  getDistance() then fetches the stored answer, already converted into centimeters. The value comes back as a whole
+  number of centimeters, which is all the accuracy this sensor can honestly offer.
   */
-  long duration  = hc.getDuration();
+  int distance = hc.getDistance();
+
+  /*
+  The sensor gives us a distance of 0 when it heard no echo at all, which happens when nothing is in range or when the
+  surface in front of it scatters the sound away. That is not a real measurement, and treating it as one would set off
+  the alarm at full blast whenever the way is clear, so instead we fall silent and wait for the next measurement.
+  */
+  if (distance == 0) {
+    Serial.println("No echo received, nothing in range.");
+    noTone(BUZZER_PIN);
+    buzzerOn = false;
+    digitalWrite(LED_PIN, LOW);
+    return;
+  }
 
   //Print the measured distance to the Serial Monitor so we can follow along while testing.
   Serial.print("Distance from obstacle: ");
@@ -169,9 +183,4 @@ void loop()
     }
   }
 
-  /*
-  A short pause between measurements. Taking readings much faster than this does not make the sensor more accurate,
-  it only keeps the board busy.
-  */
-  delay(50);
 }

@@ -23,6 +23,13 @@ These define a short melody that the buzzer will play.
 int melody[] = { 262, 294, 330, 349, 392, 440, 494, 523 }; // C4 to C5
 int noteDuration[] = { 4, 4, 4, 4, 4, 4, 4, 2 };           // Quarter notes (last one is half note)
 
+/*
+Here we work out how many notes the melody has, instead of counting them by hand. sizeof() tells us how much memory
+something takes up, so the size of the whole array divided by the size of one entry gives us the number of entries.
+Written this way the number stays correct even after you add a note of your own.
+*/
+const int NOTE_COUNT = sizeof(melody) / sizeof(melody[0]);
+
 void setup() {
 
   /*
@@ -40,10 +47,9 @@ void setup() {
 
   /*
   A for loop repeats a block of code a set number of times, counting with a variable of its own. Here "i" starts at 0
-  and grows by one each pass until it reaches 8, which is how many notes our melody has, so the block below runs once
-  for every note.
+  and grows by one each pass until it reaches NOTE_COUNT, so the block below runs once for every note in the melody.
   */
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < NOTE_COUNT; i++) {
 
     /*
     Musical note lengths are written as fractions: a quarter note is a quarter of a whole note. Here we turn that

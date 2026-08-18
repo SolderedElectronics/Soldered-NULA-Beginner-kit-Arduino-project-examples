@@ -59,6 +59,13 @@ void setup() {
   Serial.println("Wi-Fi POST Request Example");
 
   /*
+  randomSeed() gives the random number generator a starting point. Without it the board would produce the very same
+  sequence of "random" numbers after every reset, which is easy to mistake for a broken program. esp_random() reads the
+  hardware random number generator built into the chip, which gives us a genuinely different starting point every time.
+  */
+  randomSeed(esp_random());
+
+  /*
   WiFi.begin() starts the connection attempt using the network name and password we defined above. The function only
   starts the process, it does not wait for it to finish.
   */

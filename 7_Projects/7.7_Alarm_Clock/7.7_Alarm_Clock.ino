@@ -77,12 +77,19 @@ int alarmMinute = 0;
 bool alarmTriggered = false;
 
 /*
+This variable remembers which minute the alarm last went off in. Without it, stopping the alarm with a button press
+inside the very minute it fired would let it fire again immediately, over and over until the minute was out. We start it
+at -1, a value no real minute can have, so that the first alarm is never blocked.
+*/
+int lastAlarmMinute = -1;
+
+/*
 These are the variables used for button debouncing, the same technique explained in example 2.2. Because we have two
 buttons here, each one needs its own pair of variables: one remembering its previous state and one remembering when
 that state last changed.
 */
-bool lastHourState = LOW;
-bool lastMinState = LOW;
+bool lastHourState = HIGH;
+bool lastMinState = HIGH;
 unsigned long lastHourChangeMs = 0;
 unsigned long lastMinChangeMs = 0;
 const unsigned long debounceMs = 25;
@@ -95,18 +102,19 @@ unsigned long lastSync = 0;
 const unsigned long syncInterval = 60000;
 
 /*
-This is a function we wrote ourselves. It asks for the current time and, if the request fails, says so on the Serial
-Monitor.
-getLocalTime() fills in the structure we hand it and returns true on success or false on failure. Keep in mind that on
-a failure the structure is left as it was, so the values in it should not be trusted until the first successful sync has
-gone through.
+This is a function we wrote ourselves. It asks for the current time and reports whether it succeeded.
+getLocalTime() fills in the structure we hand it and returns true on success or false on failure. On a failure the
+structure is left exactly as it was, which would be full of meaningless values, so we pass that answer back to the
+caller and let it decide what to do rather than using numbers we cannot trust.
 The "*" in the parameter means we are handing over the location of the structure rather than a copy of it, which is what
 allows the function to fill in our own variable instead of one of its own.
 */
-void getLocalTimeData(struct tm *timeinfo) {
+bool getLocalTimeData(struct tm *timeinfo) {
   if (!getLocalTime(timeinfo)) {
     Serial.println("Failed to obtain time from NTP");
+    return false;
   }
+  return true;
 }
 
 /*
@@ -141,12 +149,12 @@ void setup() {
   /*
   pinMode() is a function that configures the specified pin to behave either as an input or as an output.
   The buzzer is something we write to, so it goes into OUTPUT mode, while the two buttons are things we read, so they
-  go into INPUT mode. The buttons in this kit are wired with external pull-down resistors, which means a pin sits at
-  LOW while its button is released and goes HIGH while it is pressed.
+  go into INPUT_PULLUP mode. INPUT_PULLUP switches on a small resistor inside the chip that ties each pin to 3.3V,
+  which means a pin sits at HIGH while its button is released and goes LOW while it is pressed.
   */
   pinMode(BUZZER_PIN, OUTPUT);
-  pinMode(BUTTON_HOUR, INPUT);
-  pinMode(BUTTON_MIN, INPUT);
+  pinMode(BUTTON_HOUR, INPUT_PULLUP);
+  pinMode(BUTTON_MIN, INPUT_PULLUP);
 
   /*
   clear() wipes anything left on the screen from before, and setCursor() chooses where the next text will appear: the
@@ -174,11 +182,34 @@ void setup() {
 
   /*
   configTime() tells the board which NTP server to use and how far our time zone is from UTC, and starts the first
-  request for the time in the background.
+  request for the time in the background. It returns straight away, before any answer has arrived.
   */
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+
+  /*
+  So here we wait for that first answer, because until it arrives the board has no idea what time it is and would show
+  nonsense on the display. We give it up to ten seconds and then carry on either way, so that a missing internet
+  connection cannot leave the clock stuck here forever.
+  */
   lcd.clear();
-  lcd.print("Time synced!");
+  lcd.print("Syncing time...");
+  struct tm startupTime;
+  unsigned long syncStart = millis();
+  bool timeReady = false;
+  while (!timeReady && millis() - syncStart < 10000) {
+    timeReady = getLocalTime(&startupTime);
+    delay(200);
+  }
+
+  lcd.clear();
+  if (timeReady) {
+    Serial.println("Time synced!");
+    lcd.print("Time synced!");
+    lastSync = millis();
+  } else {
+    Serial.println("Time sync failed, the clock will keep trying.");
+    lcd.print("Sync failed!");
+  }
   delay(1000);
   lcd.clear();
 }
@@ -190,7 +221,16 @@ void loop() {
   separate fields, of which we only use two: tm_hour and tm_min.
   */
   struct tm timeinfo;
-  getLocalTimeData(&timeinfo);
+
+  /*
+  If we could not read the time, there is nothing sensible to show and certainly nothing to compare the alarm against,
+  so we wait a moment and try again on the next pass. return ends this pass through loop() early, and because the board
+  calls loop() again immediately we are straight back at the next attempt.
+  */
+  if (!getLocalTimeData(&timeinfo)) {
+    delay(1000);
+    return;
+  }
 
   /*
   sprintf() builds a piece of text out of several values, following a pattern we give it. "%02d" means "a whole number
@@ -219,14 +259,15 @@ void loop() {
   This is the debouncing logic for the hour button, the same one explained in example 2.2. digitalRead() reads the value
   from the pin, millis() returns the number of milliseconds passed since the board began running the current program,
   and together they let us ignore any change that comes too soon after the previous one to be a real press.
-  Because the buttons use pull-down resistors, a press is the moment the reading goes from LOW to HIGH, and that is
-  exactly the moment we count the hour up. After 23 we start over at 0, since there is no hour 24.
+  Because the buttons use pull-up resistors, the readings are the other way around from what you might expect: a press
+  is the moment the reading goes from HIGH to LOW, and that is exactly the moment we count the hour up. After 23 we
+  start over at 0, since there is no hour 24.
   */
   bool hourReading = digitalRead(BUTTON_HOUR);
   unsigned long now = millis();
   if (hourReading != lastHourState && (now - lastHourChangeMs) > debounceMs) {
     lastHourChangeMs = now;
-    if (lastHourState == LOW && hourReading == HIGH) {
+    if (lastHourState == HIGH && hourReading == LOW) {
       alarmHour++;
       if (alarmHour > 23) alarmHour = 0;
     }
@@ -239,7 +280,7 @@ void loop() {
   bool minReading = digitalRead(BUTTON_MIN);
   if (minReading != lastMinState && (now - lastMinChangeMs) > debounceMs) {
     lastMinChangeMs = now;
-    if (lastMinState == LOW && minReading == HIGH) {
+    if (lastMinState == HIGH && minReading == LOW) {
       alarmMinute++;
       if (alarmMinute > 59) alarmMinute = 0;
     }
@@ -251,8 +292,10 @@ void loop() {
   the minute has to match, and the alarm must not have gone off already. That last check is what the alarmTriggered
   variable is for, since without it the alarm would sound again and again for the whole minute.
   */
-  if (timeinfo.tm_hour == alarmHour && timeinfo.tm_min == alarmMinute && !alarmTriggered) {
+  if (timeinfo.tm_hour == alarmHour && timeinfo.tm_min == alarmMinute && !alarmTriggered
+      && timeinfo.tm_min != lastAlarmMinute) {
     alarmTriggered = true;
+    lastAlarmMinute = timeinfo.tm_min;
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("ALARM!");
@@ -264,7 +307,7 @@ void loop() {
   Pressing either button after the alarm has gone off clears the warning from the display and arms the alarm again for
   the next day.
   */
-  if (alarmTriggered && (hourReading == HIGH || minReading == HIGH)) {
+  if (alarmTriggered && (hourReading == LOW || minReading == LOW)) {
     alarmTriggered = false;
     lcd.clear();
   }

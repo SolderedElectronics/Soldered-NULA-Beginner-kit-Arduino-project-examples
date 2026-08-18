@@ -12,6 +12,9 @@
 This is a variable to which we pass the number of pin that we had connected the LED to. 
 The NULA board has a pin naming logic as follows: IO4, where 4 is the number that we give to the variable.
 If you wish to use a different pin, make sure you are using a IO__ marked pin. 
+
+Remember that the LED needs a 330 Ohm resistor in series with it. That resistor limits how much current flows, and
+without it the LED draws more than either it or the pin is built for, so both can be damaged.
 */
 int pinNumber = 4;
 

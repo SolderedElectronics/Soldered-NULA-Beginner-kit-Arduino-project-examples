@@ -57,8 +57,8 @@ Ready to start from zero?
 | 10k photoresistor | 3 | |
 | Buzzer | 1 | Passive |
 | Shift register IC | 1 | 74HC595 |
-| 10k THT resistor | 15 | Pull-down resistors for the buttons |
-| 330 Ohm resistor | 25 | Current limiting for the LEDs |
+| 10k THT resistor | 15 | Voltage divider for the photoresistors, plus spares |
+| 330 Ohm resistor | 25 | One in series with every LED, to limit the current |
 
 ## Getting started
 
@@ -111,8 +111,8 @@ what you have learned into finished projects.
 
 | Example | What you learn | Hardware |
 | --- | --- | --- |
-| [2.1 Button counter](2_Inputs_and_Outputs/2.1_Button_Counter) | `digitalRead()`, reading a button, why a raw reading is noisy | Button, 10k resistor |
-| [2.2 Button debounce](2_Inputs_and_Outputs/2.2_Button_Debounce) | `millis()`, debouncing, toggling a state | Button, LED, resistors |
+| [2.1 Button counter](2_Inputs_and_Outputs/2.1_Button_Counter) | `digitalRead()`, reading a button, why a raw reading is noisy | Button |
+| [2.2 Button debounce](2_Inputs_and_Outputs/2.2_Button_Debounce) | `millis()`, debouncing, toggling a state | Button, LED, 330 Ohm resistor |
 | [2.3 Photoresistor analog read](2_Inputs_and_Outputs/2.3_Photoresistor_Analog_Read) | `analogRead()`, the 12-bit ADC, reading a range instead of on/off | Photoresistor, 10k resistor |
 | [2.4 Buzzer beep](2_Inputs_and_Outputs/2.4_Buzzer_Beep) | `tone()`, arrays, `for` loops, note frequencies and durations | Buzzer |
 
@@ -120,8 +120,8 @@ what you have learned into finished projects.
 
 | Example | What you learn | Hardware |
 | --- | --- | --- |
-| [3.1 Measuring distance](3_Ultrasonic_Distance_Sensor/3.1_Measuring_Distance) | Using a library, sensor objects, `begin()` | Ultrasonic sensor |
-| [3.2 Distance fade LED](3_Ultrasonic_Distance_Sensor/3.2_Distance_Fade_LED) | `map()`, `analogWrite()`, PWM, clamping a value to a range | Ultrasonic sensor, LED |
+| [3.1 Measuring distance](3_Ultrasonic_Distance_Sensor/3.1_Measuring_Distance) | Using a library over Qwiic, sensor objects, `begin()` then `takeMeasure()` | Ultrasonic sensor, Qwiic cable |
+| [3.2 Distance fade LED](3_Ultrasonic_Distance_Sensor/3.2_Distance_Fade_LED) | `map()`, `analogWrite()`, PWM, clamping a value to a range | Ultrasonic sensor, LED, 330 Ohm resistor |
 
 ### 4. LCD display
 
@@ -152,13 +152,13 @@ board connects to 2.4 GHz networks.
 | Project | What it combines | Hardware |
 | --- | --- | --- |
 | [7.1 Smart weather station](7_Projects/7.1_Smart_Weather_Station) | SHTC3 + LCD + Wi-Fi, sending readings to a webhook | SHTC3, LCD |
-| [7.2 Mini piano](7_Projects/7.2_Mini_piano) | Four buttons mapped to note frequencies | 4 buttons, buzzer, 10k resistors |
-| [7.3 Parking sensor](7_Projects/7.3_Parking_sensor) | Distance driving beep rate, non-blocking beeping | Ultrasonic sensor, buzzer, LED |
-| [7.4 RGB LED controller](7_Projects/7.4_RGB_LED_Controller) | One analog input driving three PWM outputs, colour mixing | Photoresistor, RGB LED |
-| [7.5 Shift register](7_Projects/7.5_Shift_Register) | `shiftOut()`, latching, binary counting, 8 outputs from 3 pins | 74HC595, 4 LEDs |
-| [7.6 Morse code transmitter](7_Projects/7.6_Morse_code_transmitter) | Reading text from Serial, lookup tables, structs, your own functions | LED |
+| [7.2 Mini piano](7_Projects/7.2_Mini_piano) | Four buttons mapped to note frequencies | 4 buttons, buzzer |
+| [7.3 Parking sensor](7_Projects/7.3_Parking_sensor) | Distance driving beep rate, non-blocking beeping | Ultrasonic sensor, buzzer, LED, 330 Ohm resistor |
+| [7.4 RGB LED controller](7_Projects/7.4_RGB_LED_Controller) | One analog input driving three PWM outputs, colour mixing | Photoresistor, RGB LED, 10k resistor, 3x 330 Ohm resistor |
+| [7.5 Shift register](7_Projects/7.5_Shift_Register) | `shiftOut()`, latching, binary counting, 8 outputs from 3 pins | 74HC595, 4 LEDs, 4x 330 Ohm resistor |
+| [7.6 Morse code transmitter](7_Projects/7.6_Morse_code_transmitter) | Reading text from Serial, lookup tables, structs, your own functions | LED, 330 Ohm resistor |
 | [7.7 Alarm clock](7_Projects/7.7_Alarm_Clock) | NTP time over Wi-Fi, LCD, two debounced buttons, buzzer | LCD, 2 buttons, buzzer |
-| [7.8 LED traffic light](7_Projects/7.8_LED_Traffic_Light) | Finite state machines, timed sequences without `delay()` | 3 LEDs, 330 Ohm resistors |
+| [7.8 LED traffic light](7_Projects/7.8_LED_Traffic_Light) | Finite state machines, timed sequences without `delay()` | 3 LEDs, 3x 330 Ohm resistor |
 
 ## Pins used by each example
 
@@ -172,22 +172,33 @@ quick reference. All numbers are the `IO` numbers printed on the board.
 | 2.2 Button debounce | | | LED | | | Button |
 | 2.3 Photoresistor | | | | Photoresistor | | |
 | 2.4 Buzzer beep | | | | Buzzer | | |
-| 3.1 Measuring distance | | Echo | Trig | | | |
-| 3.2 Distance fade LED | LED | Echo | Trig | | | |
+| 3.1 Measuring distance | | | | | | |
+| 3.2 Distance fade LED | LED | | | | | |
 | 6.2 Wi-Fi LED control | | | LED | | | |
 | 7.2 Mini piano | Button 1 | Button 2 | Button 3 | Button 4 | Buzzer | |
-| 7.3 Parking sensor | Buzzer | Echo | Trig | LED | | |
+| 7.3 Parking sensor | Buzzer | | | LED | | |
 | 7.4 RGB LED controller | Red | Green | Blue | Photoresistor | | |
 | 7.5 Shift register | Data | Latch | Clock | | | |
 | 7.6 Morse code | LED | | | | | |
 | 7.7 Alarm clock | Hour button | Minute button | Buzzer | | | |
 | 7.8 Traffic light | Red | Orange | Green | | | |
 
-The Qwiic modules do not appear in the table because they all share the same I2C bus, which on the NULA Mini is
-**IO6 (SDA)** and **IO7 (SCL)**. Chain them together with the Qwiic cables and no pin configuration is needed.
+The three Qwiic modules - the LCD, the ultrasonic distance sensor and the SHTC3 - do not appear in the table because
+they all share the same I2C bus, which on the NULA Mini is **IO6 (SDA)** and **IO7 (SCL)**. Chain them together with the
+Qwiic cables and no pin configuration is needed, which is why example 3.1 claims no GPIO pins at all.
 
-Buttons in this kit are wired with **external 10k pull-down resistors**, so a pin reads LOW when its button is
-released and HIGH while it is pressed. LEDs are wired through a **330 Ohm resistor** to limit the current.
+Buttons use the **internal pull-up resistors** of the board, switched on with `INPUT_PULLUP` in Arduino and
+`Pin.PULL_UP` in MicroPython. That means no resistor is needed on the breadboard: wire one side of the button to the
+pin and the other straight to **GND**. It also means the readings are the other way around from what you might expect,
+which is called active low: a pin reads **HIGH while its button is released** and **LOW while it is pressed**.
+
+Every LED needs its **own 330 Ohm resistor** in series with it, which limits the current through it. Without one the
+LED draws more current than either it or the pin is built for, and both can be damaged. The RGB LED counts as three
+LEDs here, so it takes three resistors, one per colour channel.
+
+The photoresistor examples need a **10k resistor** as well. A photoresistor changes its resistance with light but the
+board can only measure a voltage, and pairing it with a fixed resistor turns that changing resistance into a changing
+voltage. This arrangement is called a voltage divider.
 
 
 Every example is compiled for the NULA Mini on every push by the

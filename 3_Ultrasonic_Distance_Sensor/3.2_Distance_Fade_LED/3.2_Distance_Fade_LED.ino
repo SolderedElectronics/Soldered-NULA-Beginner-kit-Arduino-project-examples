@@ -18,31 +18,23 @@ call instead of timing the echo ourselves.
 #include "Ultrasonic-distance-sensor-easyC-SOLDERED.h"
 
 /*
-This is a variable to which we pass the number of pin that we had connected the sensor's TRIG pin to, the pin the
-board uses to tell the sensor to send out an ultrasonic pulse.
-The NULA board has a pin naming logic as follows: IO4, where 4 is the number that we give to the variable.
-If you wish to use a different pin, make sure you are using a IO__ marked pin.
+Here we create our sensor object, which we named "hc". The sensor connects over easyC, which is Soldered's name for an
+I2C connection over a single cable, so we pass no pin numbers: I2C always uses the same two pins on the board (IO6 and
+IO7 on the NULA board) and the library already knows to look there.
 */
-const int TRIG_PIN = 4;
-
-/*
-This is a variable to which we pass the number of pin that we had connected the sensor's ECHO pin to, the pin on
-which the sensor reports back how long it took for the pulse to return.
-*/
-const int ECHO_PIN = 3;
+Ultrasonic_Sensor hc;
 
 /*
 This is a variable to which we pass the number of pin that we had connected the LED to. Because we want to dim this
 LED and not only switch it on and off, we have to pick a pin that supports PWM. PWM is explained further down in
 this example.
+The NULA board has a pin naming logic as follows: IO2, where 2 is the number that we give to the variable.
+If you wish to use a different pin, make sure you are using a IO__ marked pin.
+
+Remember that the LED needs a 330 Ohm resistor in series with it. That resistor limits how much current flows, and
+without it the LED draws more than either it or the pin is built for, so both can be damaged.
 */
 const int LED_PIN = 2;
-
-/*
-Here we create our sensor object, which we named "hc". We pass it the two pin numbers we defined above, in the order
-TRIG first and ECHO second, so the library knows how the sensor is wired to the board.
-*/
-Ultrasonic_Sensor hc(TRIG_PIN, ECHO_PIN);
 
 /*
 These two variables define the distance range we care about, in centimeters. Anything closer than the minimum counts
@@ -51,6 +43,12 @@ these values.
 */
 const int MIN_DISTANCE = 2;
 const int MAX_DISTANCE = 50;
+
+/*
+This is how long we wait after asking for a measurement, in milliseconds. The sensor gives up listening for an echo
+after 38 milliseconds, so waiting a little longer than that means the answer is always ready when we ask for it.
+*/
+const int MEASURE_WAIT_MS = 50;
 
 void setup() {
 
@@ -67,7 +65,14 @@ void setup() {
   pinMode(LED_PIN, OUTPUT);
 
   /*
-  begin() prepares the sensor for use, setting the TRIG pin as an output and the ECHO pin as an input for us.
+  analogWriteResolution() defines how many bits are used for the brightness values we write with analogWrite().
+  By default the board expects 8 bits, meaning values from 0 to 255, and anything larger is simply refused. Because we
+  want the finer control of 12 bits, from 0 to 4095, we have to say so here, otherwise the LED would not dim at all.
+  */
+  analogWriteResolution(LED_PIN, 12);
+
+  /*
+  begin() prepares the sensor for use, starting the I2C communication and telling the library which address to talk to.
   */
   hc.begin();
 
@@ -78,20 +83,33 @@ void setup() {
 void loop() {
 
   /*
-  getDistance() is a function that makes the sensor take one measurement and returns the result in centimeters.
+  Reading an easyC sensor takes two steps. takeMeasure() asks the sensor to send out a pulse and time the echo, and the
+  wait afterwards gives it the moment it needs to finish that work and store the answer.
   */
-  float distance = hc.getDistance();
+  hc.takeMeasure();
+  delay(MEASURE_WAIT_MS);
 
   /*
-  getDuration() returns the raw travel time of the echo in microseconds, before it is converted into a distance.
-  We only read it here so you can see the number the sensor actually gives us. Keep in mind that calling it sends
-  out a second ultrasonic pulse, so if you don't need this value you can safely delete this line.
+  getDistance() then fetches the stored answer, already converted into centimeters. The value comes back as a whole
+  number of centimeters, which is all the accuracy this sensor can honestly offer.
   */
-  long duration = hc.getDuration();
+  int distance = hc.getDistance();
+
+  /*
+  The sensor answers with 0 when it heard no echo at all, which happens when nothing is in range or when the surface in
+  front of it scatters the sound away. That is not a real measurement, so we skip the rest of this pass instead of
+  treating it as an object pressed right up against the sensor.
+  return ends this pass through loop() early, and because the board calls loop() again immediately we are straight back
+  at the next measurement.
+  */
+  if (distance == 0) {
+    Serial.println("No echo received, nothing in range.");
+    return;
+  }
 
   //Print the measured distance to the Serial Monitor.
   Serial.print("Distance: ");
-  Serial.print(distance, 1);
+  Serial.print(distance);
   Serial.print(" cm");
 
   /*
@@ -120,9 +138,4 @@ void loop() {
   //Print the brightness value as well, so we can see how it changes together with the distance.
   Serial.print(" -> Brightness: ");
   Serial.println(brightness);
-
-  /*
-  A short pause between measurements. Keeping it small makes the fading look smooth.
-  */
-  delay(100);
 }

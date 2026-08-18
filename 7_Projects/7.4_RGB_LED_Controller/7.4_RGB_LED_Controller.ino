@@ -15,6 +15,10 @@
 This is a variable to which we pass the number of pin that we had connected the photoresistor's output to. Because we
 need to read a whole range of values here and not only HIGH or LOW, this has to be a pin that supports analog input.
 The NULA board has a pin naming logic as follows: IO5, where 5 is the number that we give to the variable.
+
+This example also needs a 10k resistor. A photoresistor changes its resistance with light, but the board can only
+measure a voltage, so we pair the two in what is called a voltage divider: the fixed resistor turns the changing
+resistance into a changing voltage that the board can read.
 */
 const int LDR_PIN = 5;
 
@@ -23,6 +27,10 @@ These are the variables to which we pass the numbers of pins that we had connect
 RGB LED to. An RGB LED is really three LEDs in one package, one red, one green and one blue, and by lighting them at
 different strengths we can mix any colour we like. All three pins have to support PWM, which is what lets us set a
 brightness instead of only on or off.
+
+Remember that each of the three colour channels needs its own 330 Ohm resistor in series with it. An RGB LED counts as
+three LEDs, so it takes three resistors, and without them the channels draw more current than either they or the pins
+are built for.
 */
 const int RED_PIN = 2;
 const int GREEN_PIN = 3;
@@ -61,6 +69,14 @@ void setup() {
   write to, so they go into OUTPUT mode.
   */
   pinMode(LDR_PIN, INPUT);
+
+  /*
+  analogReadResolution() defines how many bits are used for ADC readings. The NULA MINI supports 12-bit resolution,
+  which means analogRead() returns values from 0 to 4095. That is the range the colour ranges below are built around,
+  so we state it here rather than relying on the default.
+  */
+  analogReadResolution(12);
+
   pinMode(RED_PIN, OUTPUT);
   pinMode(GREEN_PIN, OUTPUT);
   pinMode(BLUE_PIN, OUTPUT);

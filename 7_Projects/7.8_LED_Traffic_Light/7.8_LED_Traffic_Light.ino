@@ -15,6 +15,9 @@
 These are the variables to which we pass the numbers of pins that we had connected the three LEDs to.
 The NULA board has a pin naming logic as follows: IO4, where 4 is the number that we give to the variable.
 If you wish to use a different pin, make sure you are using a IO__ marked pin.
+
+Remember that every one of these LEDs needs its own 330 Ohm resistor in series with it. That resistor limits how much
+current flows, and without it an LED draws more than it is built for and can be damaged.
 */
 const int LED_GREEN = 4;
 const int LED_ORANGE = 3;
@@ -55,6 +58,12 @@ unsigned long lastBlink = 0;
 void setup() {
 
   /*
+  Serial.begin() establishes serial communication between your board and your computer via a USB cable. We use it here
+  to announce every change of state, which makes it much easier to follow what the state machine is doing.
+  */
+  Serial.begin(115200);
+
+  /*
   pinMode() is a function that configures the specified pin to behave either as an input or in this case as an output.
   All three LEDs are things we write to, so all three pins go into OUTPUT mode.
   */
@@ -70,6 +79,9 @@ void setup() {
   state = GREEN;
   lastChange = millis();
   stateDuration = 5000;
+
+  Serial.println("Traffic Light Example started!");
+  Serial.println("State: GREEN");
 }
 
 void loop() {
@@ -104,6 +116,16 @@ void loop() {
         state = GREEN_BLINK;
         lastChange = now;
         stateDuration = 3000;
+
+        /*
+        Here we set the blinking up before we hand over to it. Without these two lines the blink would carry on from
+        wherever it left off the previous time around the cycle, so the green LED could enter this state switched off
+        and the first flash would come at the wrong moment.
+        */
+        greenOn = true;
+        lastBlink = now;
+
+        Serial.println("State: GREEN_BLINK");
       }
       break;
 
@@ -132,6 +154,7 @@ void loop() {
         state = ORANGE;
         lastChange = now;
         stateDuration = 2000;
+        Serial.println("State: ORANGE");
       }
       break;
 
@@ -147,6 +170,7 @@ void loop() {
         state = RED;
         lastChange = now;
         stateDuration = 5000;
+        Serial.println("State: RED");
       }
       break;
 
@@ -162,6 +186,7 @@ void loop() {
         state = RED_ORANGE;
         lastChange = now;
         stateDuration = 2000;
+        Serial.println("State: RED_ORANGE");
       }
       break;
 
@@ -179,6 +204,7 @@ void loop() {
         state = GREEN;
         lastChange = now;
         stateDuration = 5000;
+        Serial.println("State: GREEN");
       }
       break;
   }

@@ -41,14 +41,14 @@ void setup() {
 
   /*
   pinMode() is a function that configures the specified pin to behave either as an input or as an output.
-  As these pins need to detect if a button has been pressed, we will put them in INPUT mode. The buttons in this kit
-  are wired with external pull-down resistors, which means a pin sits at LOW while its button is released and goes
-  HIGH while it is pressed.
+  As these pins need to detect if a button has been pressed, we will put them in INPUT_PULLUP mode. INPUT_PULLUP
+  switches on a small resistor inside the chip that ties each pin to 3.3V, which means a pin sits at HIGH while its
+  button is released and goes LOW while it is pressed.
   */
-  pinMode(BTN1, INPUT);
-  pinMode(BTN2, INPUT);
-  pinMode(BTN3, INPUT);
-  pinMode(BTN4, INPUT);
+  pinMode(BTN1, INPUT_PULLUP);
+  pinMode(BTN2, INPUT_PULLUP);
+  pinMode(BTN3, INPUT_PULLUP);
+  pinMode(BTN4, INPUT_PULLUP);
 
   /*
   The buzzer is the one pin that has to write instead of read, so we put it in OUTPUT mode.
@@ -60,22 +60,22 @@ void loop() {
 
   /*
   digitalRead() is a function that reads the value from a specified digital pin, either HIGH or LOW. Because of the
-  pull-down resistors, a pressed button reads HIGH.
+  pull-up resistors, a pressed button reads LOW.
   tone() is a function that makes the buzzer produce a sound of the given frequency. Called with only a pin and a
   frequency, as it is here, it keeps playing until we stop it ourselves.
   Notice the "else if" chain: the board checks the buttons in order and stops at the first one it finds pressed, so
   pressing two buttons at once plays only the note that comes first in this list.
   */
-  if (digitalRead(BTN1) == HIGH) {
+  if (digitalRead(BTN1) == LOW) {
     tone(BUZZER_PIN, NOTE_C4);
   } 
-  else if (digitalRead(BTN2) == HIGH) {
+  else if (digitalRead(BTN2) == LOW) {
     tone(BUZZER_PIN, NOTE_D4);
   } 
-  else if (digitalRead(BTN3) == HIGH) {
+  else if (digitalRead(BTN3) == LOW) {
     tone(BUZZER_PIN, NOTE_E4);
   } 
-  else if (digitalRead(BTN4) == HIGH) {
+  else if (digitalRead(BTN4) == LOW) {
     tone(BUZZER_PIN, NOTE_F4);
   } 
   else {

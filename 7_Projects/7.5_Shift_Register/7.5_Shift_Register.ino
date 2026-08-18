@@ -30,6 +30,9 @@ int clockPin = 4;
 /*
 This is a variable to which we pass the number of pin that we had connected the shift register's data pin to, marked DS
 on the chip. This is the pin the bits themselves travel over, one after another.
+
+Remember that each of the four LEDs on the shift register outputs needs its own 330 Ohm resistor in series with it,
+exactly as if it were wired straight to the board.
 */
 int dataPin = 2;
 
