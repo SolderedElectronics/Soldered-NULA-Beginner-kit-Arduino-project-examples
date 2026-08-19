@@ -20,7 +20,6 @@ call instead of timing the echo ourselves.
 /*
 This is a variable to which we pass the number of pin that we had connected the buzzer to.
 The NULA board has a pin naming logic as follows: IO2, where 2 is the number that we give to the variable.
-If you wish to use a different pin, make sure you are using a IO__ marked pin.
 */
 const int BUZZER_PIN = 2;
 

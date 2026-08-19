@@ -16,7 +16,6 @@ This is a variable to which we pass the number of pin that we had connected the 
 74HC595 chip this pin is marked ST_CP. The latch is what tells the chip "the data I sent you is complete, show it now",
 which is why the LEDs change all at once instead of flickering through every step.
 The NULA board has a pin naming logic as follows: IO3, where 3 is the number that we give to the variable.
-If you wish to use a different pin, make sure you are using a IO__ marked pin.
 */
 int latchPin = 3;
 

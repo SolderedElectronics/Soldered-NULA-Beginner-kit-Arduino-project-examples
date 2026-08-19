@@ -62,7 +62,6 @@ LCD lcd(16, 2); // Qwiic 16x2 LCD
 These are the variables to which we pass the numbers of pins that we had connected the two BUTTONS and the buzzer to.
 One button counts the alarm hour up, the other counts the alarm minute up.
 The NULA board has a pin naming logic as follows: IO2, where 2 is the number that we give to the variable.
-If you wish to use a different pin, make sure you are using a IO__ marked pin.
 */
 const int BUTTON_HOUR = 2;
 const int BUTTON_MIN  = 3;

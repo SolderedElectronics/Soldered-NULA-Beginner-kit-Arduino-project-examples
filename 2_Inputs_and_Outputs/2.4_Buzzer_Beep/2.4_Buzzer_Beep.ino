@@ -12,7 +12,6 @@
 /*
 This is a variable to which we assign the number of the pin that we connected the buzzer to.
 The NULA board has a pin naming logic as follows: IO5, where 5 is the number that we give to the variable.
-If you wish to use a different pin, make sure you are using a IO__ marked pin.
 */
 const int BUZZER_PIN = 5;
 
