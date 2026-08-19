@@ -206,7 +206,9 @@ Every example is compiled for the NULA Mini on every push by the
 
 ## MicroPython
 
-This repository holds the Arduino examples. The NULA Mini also runs MicroPython, and the kit documentation covers both.
+This repository holds the Arduino examples. The same 22 examples exist for MicroPython, with matching numbering and
+matching pins, in the
+[MicroPython examples repository](https://github.com/SolderedElectronics/Soldered-NULA-Beginner-kit-MicroPython-project-examples).
 
 ## Need help?
 
