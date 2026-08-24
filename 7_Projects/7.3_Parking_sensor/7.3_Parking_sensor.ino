@@ -98,23 +98,33 @@ void loop()
   delay(MEASURE_WAIT_MS);
 
   /*
-  getDistance() then fetches the stored answer, already converted into centimeters. The value comes back as a whole
-  number of centimeters, which is all the accuracy this sensor can honestly offer.
+  getDistance() then fetches the stored answer. Note the unit: the sensor reports the distance in MILLIMETERS, so a
+  reading of 250 means the obstacle is 25 centimeters away. We keep it in a variable named "reading" so that the name
+  reminds us it is not yet the unit we want to think in.
   */
-  int distance = hc.getDistance();
+  uint16_t reading = hc.getDistance();
 
   /*
-  The sensor gives us a distance of 0 when it heard no echo at all, which happens when nothing is in range or when the
-  surface in front of it scatters the sound away. That is not a real measurement, and treating it as one would set off
-  the alarm at full blast whenever the way is clear, so instead we fall silent and wait for the next measurement.
+  The sensor answers with 0 whenever it heard no echo it could use. That happens in two opposite situations: when
+  nothing is in range at all, and when an object is closer than about 3 centimeters, because then the echo comes back
+  before the sensor has finished sending and it never hears it. Neither is a real measurement, and treating one as a
+  distance would set off the alarm whenever the way is clear, so instead we fall silent and wait for the next one.
   */
-  if (distance == 0) {
+  if (reading == 0) {
     Serial.println("No echo received, nothing in range.");
     noTone(BUZZER_PIN);
     buzzerOn = false;
     digitalWrite(LED_PIN, LOW);
     return;
   }
+
+  /*
+  Now we turn the reading into centimeters, which is how we would naturally describe a distance to a person, and how
+  every number further down this sketch is written. Ten millimeters make one centimeter, so we divide by ten. This is
+  whole-number division, so 253 millimeters becomes 25 centimeters, and that is all the accuracy this sensor can
+  honestly offer anyway.
+  */
+  int distance = reading / 10;
 
   //Print the measured distance to the Serial Monitor so we can follow along while testing.
   Serial.print("Distance from obstacle: ");
