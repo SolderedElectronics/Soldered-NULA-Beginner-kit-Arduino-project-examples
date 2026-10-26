@@ -53,7 +53,7 @@ const int daylightOffset_sec = 0;
 
 /*
 Here we create our display object, which we named "lcd". An object is our way of talking to the display: every function
-we call on it, we call through this name. It needs no pin numbers because it uses easyC, which is Soldered's name for an
+we call on it, we call through this name. It needs no pin numbers because it uses Qwiic, which is an
 I2C connection over a single cable, and I2C always uses the same two pins on the board (IO6 and IO7 on the NULA board).
 */
 LCD lcd(16, 2); // Qwiic 16x2 LCD
