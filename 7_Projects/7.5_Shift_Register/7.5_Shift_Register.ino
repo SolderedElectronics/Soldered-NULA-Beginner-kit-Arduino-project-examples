@@ -24,7 +24,7 @@ This is a variable to which we pass the number of pin that we had connected the 
 SH_CP on the chip. The clock is a pin we switch up and down, and every time it goes up the chip takes in one more bit.
 This is how the chip knows when the next bit is ready.
 */
-int clockPin = 4;
+int clockPin = 2;
 
 /*
 This is a variable to which we pass the number of pin that we had connected the shift register's data pin to, marked DS
@@ -33,7 +33,7 @@ on the chip. This is the pin the bits themselves travel over, one after another.
 Remember that each of the four LEDs on the shift register outputs needs its own 330 Ohm resistor in series with it,
 exactly as if it were wired straight to the board.
 */
-int dataPin = 2;
+int dataPin = 4;
 
 /*
 This variable holds the value of our counter. Each pass through the loop it grows by one, and after 15 it starts over
@@ -70,10 +70,10 @@ void loop() {
 
   /*
   shiftOut() is a function that sends one byte out over a data pin, one bit at a time, pulsing the clock pin after each
-  bit. MSBFIRST tells it to start with the most significant bit, meaning the leftmost one, which is the order the
-  74HC595 expects.
+  bit. LSBFIRST tells it to start with the least significant bit, meaning the rightmost one. The first bit sent travels
+  furthest along the chip, which is why the lowest bit ends up on pin Q7.
   */
-  shiftOut(dataPin, clockPin, MSBFIRST, value);
+  shiftOut(dataPin, clockPin, LSBFIRST, value);
 
   /*
   Pulling the latch pin back HIGH tells the chip that the data is complete. Only now do the outputs change, and all
