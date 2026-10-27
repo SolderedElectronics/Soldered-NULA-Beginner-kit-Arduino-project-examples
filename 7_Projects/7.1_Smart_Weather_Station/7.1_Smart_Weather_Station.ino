@@ -48,7 +48,7 @@ const char* webhookURL = "your unique url";
 /*
 Here we create our two objects: one for the sensor and one for the display. An object is our way of talking to a
 device: every function we call on it, we call through its name.
-The sensor needs no pin numbers because it uses Qwiic, which is an I2C connection over a single
+The sensor needs no pin numbers because it uses easyC, which is Soldered's name for an I2C connection over a single
 cable, and I2C always uses the same two pins on the board (IO6 and IO7 on the NULA board).
 */
 SHTC3 shtc3;
