@@ -5,7 +5,7 @@
  * @brief       Variation of the 2.2 Button debounce example that switches the LED when the button is released,
  *              instead of when it is pressed.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Borna Zelenika @ soldered.com
  ***************************************************
  */
 

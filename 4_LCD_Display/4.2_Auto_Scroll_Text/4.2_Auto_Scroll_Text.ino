@@ -7,7 +7,7 @@
  *              This example demonstrates how to use lcd.scrollDisplayLeft() and lcd.scrollDisplayRight()
  *              to move text smoothly across the screen.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

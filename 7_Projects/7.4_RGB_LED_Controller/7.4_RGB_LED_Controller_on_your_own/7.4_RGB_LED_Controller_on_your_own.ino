@@ -5,7 +5,7 @@
  * @brief       Variation of the 7.4 RGB LED controller example turned upside down, so darkness gives white and bright
  *              light gives red. It works as a night light.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Borna Zelenika @ soldered.com
  ***************************************************
  */
 

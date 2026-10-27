@@ -5,7 +5,7 @@
  * @brief       Variation of the 3.1 Measuring distance example that prints the distance in centimetres with one
  *              decimal place, instead of millimetres.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Borna Zelenika @ soldered.com
  ***************************************************
  */
 

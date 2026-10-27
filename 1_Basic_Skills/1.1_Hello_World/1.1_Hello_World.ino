@@ -4,7 +4,7 @@
  * @file        1.1_Hello_World.ino
  * @brief       Example that shows basic functionality of the Serial Monitor, writing data only.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

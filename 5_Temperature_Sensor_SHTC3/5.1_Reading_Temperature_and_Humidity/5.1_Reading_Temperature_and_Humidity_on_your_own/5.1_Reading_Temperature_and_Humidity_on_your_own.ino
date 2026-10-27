@@ -5,7 +5,7 @@
  * @brief       Variation of the 5.1 Temperature and humidity example that prints an extra line, "Someone breathed on
  *              me!", whenever the humidity goes above 60 %.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Borna Zelenika @ soldered.com
  ***************************************************
  */
 

@@ -5,7 +5,7 @@
  * @brief       Variation of the 7.6 Morse code transmitter example with the full stop and the question mark added to
  *              the Morse table, so both are sent.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Borna Zelenika @ soldered.com
  ***************************************************
  */
 

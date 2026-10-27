@@ -8,7 +8,7 @@
  *              It brings together the LCD from section 4, the button debouncing from section 2.2, the buzzer from
  *              section 2.4 and the Wi-Fi connection from section 6.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

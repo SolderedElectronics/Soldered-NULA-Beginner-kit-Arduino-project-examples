@@ -7,7 +7,7 @@
  *              web address that simply collects whatever is sent to it and shows it to you in your browser.
  *              In example 6.1 we read data from the internet, here we write data to it.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

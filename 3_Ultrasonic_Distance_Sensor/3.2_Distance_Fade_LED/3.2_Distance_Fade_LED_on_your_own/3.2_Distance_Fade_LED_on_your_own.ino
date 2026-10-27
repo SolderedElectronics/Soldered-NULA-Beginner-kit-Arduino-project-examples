@@ -5,7 +5,7 @@
  * @brief       Variation of the 3.2 Distance fade LED example with a range you can actually use: the LED starts to
  *              glow at 30 cm and reaches full brightness at 3 cm.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Borna Zelenika @ soldered.com
  ***************************************************
  */
 

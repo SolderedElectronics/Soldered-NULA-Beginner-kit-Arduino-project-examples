@@ -5,7 +5,7 @@
  * @brief       Example that shows how to increase a counter each time a button is pressed.
  *              This example does NOT use any debouncing or signal stabilization.
  *              For details, connection diagram, and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

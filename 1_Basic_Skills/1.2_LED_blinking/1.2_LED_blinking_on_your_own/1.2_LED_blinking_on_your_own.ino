@@ -5,7 +5,7 @@
  * @brief       Variation of the 1.2 LED blinking example that makes the LED beat like a heart: two quick flashes
  *              close together, then a long rest, repeating once a second.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Borna Zelenika @ soldered.com
  ***************************************************
  */
 

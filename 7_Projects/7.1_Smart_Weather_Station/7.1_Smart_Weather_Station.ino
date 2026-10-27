@@ -7,7 +7,7 @@
  *              section 6. The board measures temperature and humidity, shows them on the LCD, and sends them to a
  *              webhook on the internet so you can follow the readings from anywhere.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

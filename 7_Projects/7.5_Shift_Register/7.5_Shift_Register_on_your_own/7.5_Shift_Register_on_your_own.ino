@@ -5,7 +5,7 @@
  * @brief       Variation of the 7.5 Shift register example that moves one lit LED along the row (1, 2, 4, 8, then
  *              back to 1) instead of counting in binary.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Borna Zelenika @ soldered.com
  ***************************************************
  */
 

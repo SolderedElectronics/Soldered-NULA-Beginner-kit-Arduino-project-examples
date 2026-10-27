@@ -5,7 +5,7 @@
  * @brief       Variation of the 4.2 Auto scroll text example that makes the message travel from left to right instead
  *              of right to left.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Borna Zelenika @ soldered.com
  ***************************************************
  */
 

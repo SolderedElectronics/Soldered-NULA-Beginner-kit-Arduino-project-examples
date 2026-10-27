@@ -5,7 +5,7 @@
  * @brief       Variation of the 2.1 Button counter example. After the tenth press it prints "Ten presses. Starting
  *              again." and the count goes back to zero.
  *              For details, connection diagram, and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Borna Zelenika @ soldered.com
  ***************************************************
  */
 

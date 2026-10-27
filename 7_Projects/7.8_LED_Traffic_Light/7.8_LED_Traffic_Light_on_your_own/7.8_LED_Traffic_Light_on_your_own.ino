@@ -5,7 +5,7 @@
  * @brief       Variation of the 7.8 LED traffic light example with a night mode: a sixth state, ORANGE_BLINK, blinks
  *              the orange LED once a second and is the starting state.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Borna Zelenika @ soldered.com
  ***************************************************
  */
 

@@ -7,7 +7,7 @@
  *              four LEDs, which is a nice way of seeing how computers count in binary.
  *              It introduces two new ideas: shifting data out one bit at a time, and latching the outputs.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

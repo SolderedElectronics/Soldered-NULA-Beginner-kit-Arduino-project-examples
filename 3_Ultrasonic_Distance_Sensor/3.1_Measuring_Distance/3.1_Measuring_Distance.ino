@@ -7,7 +7,7 @@
  *              echo took to come back, works out the distance from that time, and hands us the answer over easyC.
  *              The measured distance is printed in millimeters to the Serial Monitor.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

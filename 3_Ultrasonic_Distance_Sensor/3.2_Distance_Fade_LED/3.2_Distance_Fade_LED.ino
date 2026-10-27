@@ -7,7 +7,7 @@
  *              becomes. This example introduces analogWrite() and map(), two functions that let us turn a measured
  *              value into a brightness level.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

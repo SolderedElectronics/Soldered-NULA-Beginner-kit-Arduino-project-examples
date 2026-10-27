@@ -5,7 +5,7 @@
  * @brief       Variation of the 1.1 Hello World example that prints "Hello, World!" once a second for as long as the
  *              board has power.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Borna Zelenika @ soldered.com
  ***************************************************
  */
 
