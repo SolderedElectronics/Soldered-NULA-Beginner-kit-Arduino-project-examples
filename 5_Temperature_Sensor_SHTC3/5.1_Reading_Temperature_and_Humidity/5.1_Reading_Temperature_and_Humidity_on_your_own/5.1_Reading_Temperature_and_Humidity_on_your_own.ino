@@ -2,9 +2,8 @@
  **************************************************
  *
  * @file        5.1_Reading_Temperature_and_Humidity_on_your_own.ino
- * @brief       Example that shows how to measure temperature and humidity using the Soldered SHTC3 sensor.
- *              The sensor communicates with the board over easyC, so only one cable is needed and no pins have to
- *              be defined. The measured values are printed to the Serial Monitor.
+ * @brief       Variation of the 5.1 Temperature and humidity example that prints an extra line, "Someone breathed on
+ *              me!", whenever the humidity goes above 60 %.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
  * @author      Soldered
  ***************************************************
