@@ -6,7 +6,7 @@
  *              The board makes an HTTP GET request to example.com and prints whatever the website sends back to the
  *              Serial Monitor. This is the first step towards any project that needs data from the internet.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

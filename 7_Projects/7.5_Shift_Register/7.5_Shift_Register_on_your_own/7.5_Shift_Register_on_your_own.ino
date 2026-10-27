@@ -1,0 +1,95 @@
+/**
+ **************************************************
+ *
+ * @file        7.5_Shift_Register_on_your_own.ino
+ * @brief       Variation of the 7.5 Shift register example that moves one lit LED along the row (1, 2, 4, 8, then
+ *              back to 1) instead of counting in binary.
+ *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
+ * @author      Borna Zelenika @ soldered.com
+ ***************************************************
+ */
+
+/*
+This is a variable to which we pass the number of pin that we had connected the shift register's latch pin to. On the
+74HC595 chip this pin is marked ST_CP. The latch is what tells the chip "the data I sent you is complete, show it now",
+which is why the LEDs change all at once instead of flickering through every step.
+The NULA board has a pin naming logic as follows: IO3, where 3 is the number that we give to the variable.
+*/
+int latchPin = 3;
+
+/*
+This is a variable to which we pass the number of pin that we had connected the shift register's clock pin to, marked
+SH_CP on the chip. The clock is a pin we switch up and down, and every time it goes up the chip takes in one more bit.
+This is how the chip knows when the next bit is ready.
+*/
+int clockPin = 2;
+
+/*
+This is a variable to which we pass the number of pin that we had connected the shift register's data pin to, marked DS
+on the chip. This is the pin the bits themselves travel over, one after another.
+
+Remember that each of the four LEDs on the shift register outputs needs its own 330 Ohm resistor in series with it,
+exactly as if it were wired straight to the board.
+*/
+int dataPin = 4;
+
+/*
+This variable holds the value of our counter. Each pass through the loop it grows by one, and after 15 it starts over
+from zero.
+*/
+int counter = 0;
+
+void setup() {
+
+  /*
+  pinMode() is a function that configures the specified pin to behave either as an input or in this case as an output.
+  All three pins going to the shift register are pins we write to, so all three go into OUTPUT mode.
+  */
+  pinMode(latchPin, OUTPUT);
+  pinMode(clockPin, OUTPUT);
+  pinMode(dataPin, OUTPUT);
+}
+
+void loop() {
+
+  /*
+  Here we keep our counter inside two bits. The "&" is a bitwise AND, and 0x03 is the hexadecimal way of writing the
+  number 3, which in binary is 11. Combining a number with 11 this way keeps only its lowest two bits and throws
+  the rest away, so the counter only runs 0, 1, 2, 3 and the shift below lights one of the four LEDs at a time.
+  A byte is a variable that holds exactly eight bits, which is also exactly how much data the 74HC595 takes at a time.
+  */
+  byte value = 1 << (counter & 0x03);
+
+  /*
+  Pulling the latch pin LOW tells the chip that we are about to send new data and that it should not change its outputs
+  yet. Without this the LEDs would visibly flicker while the bits are still arriving.
+  */
+  digitalWrite(latchPin, LOW);
+
+  /*
+  shiftOut() is a function that sends one byte out over a data pin, one bit at a time, pulsing the clock pin after each
+  bit. LSBFIRST tells it to start with the least significant bit, meaning the rightmost one. The first bit sent travels
+  furthest along the chip, which is why the lowest bit ends up on pin Q7.
+  */
+  shiftOut(dataPin, clockPin, LSBFIRST, value);
+
+  /*
+  Pulling the latch pin back HIGH tells the chip that the data is complete. Only now do the outputs change, and all
+  eight of them change together.
+  */
+  digitalWrite(latchPin, HIGH);
+
+  /*
+  Count one up, and start over from zero once we pass 15, because four LEDs cannot show any number higher than that.
+  */
+  counter++;
+  if (counter > 15){
+    counter = 0;
+  } 
+
+  /*
+  delay() is a function that starts a pause in the code. Half a second is slow enough to follow the counting with your
+  eyes. Feel free to experiment with this value.
+  */
+  delay(500);
+}

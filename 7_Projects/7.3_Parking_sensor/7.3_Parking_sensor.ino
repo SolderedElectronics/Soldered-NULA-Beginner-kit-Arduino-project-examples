@@ -7,7 +7,7 @@
  *              turns into one continuous tone and an LED lights up as a final warning.
  *              It builds on the distance measuring from section 3.1 and the buzzer from section 2.4.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

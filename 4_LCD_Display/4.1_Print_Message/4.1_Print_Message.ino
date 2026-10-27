@@ -7,7 +7,7 @@
  *              The LCD is controlled using the Soldered LCD library.
  *              This example demonstrates the basics of initializing the display and printing text.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

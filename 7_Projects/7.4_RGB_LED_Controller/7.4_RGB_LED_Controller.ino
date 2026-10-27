@@ -7,7 +7,7 @@
  *              It builds on the photoresistor from section 2.3 and the LED brightness control from section 3.2, and
  *              shows how one sensor reading can drive three outputs at the same time.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

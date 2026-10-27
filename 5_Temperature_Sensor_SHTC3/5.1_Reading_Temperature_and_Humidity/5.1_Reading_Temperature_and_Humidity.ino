@@ -6,7 +6,7 @@
  *              The sensor communicates with the board over easyC, so only one cable is needed and no pins have to
  *              be defined. The measured values are printed to the Serial Monitor.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

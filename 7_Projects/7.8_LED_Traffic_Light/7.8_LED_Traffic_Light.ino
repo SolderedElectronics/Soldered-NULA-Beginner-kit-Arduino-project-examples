@@ -7,7 +7,7 @@
  *              It introduces the finite state machine, or FSM, which is a very common way of writing programs that move
  *              through a fixed series of steps without ever using delay() to wait.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

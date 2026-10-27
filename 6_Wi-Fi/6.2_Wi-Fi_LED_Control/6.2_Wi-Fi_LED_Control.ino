@@ -7,7 +7,7 @@
  *              or computer. The page has an ON and an OFF button and shows the current state of the LED.
  *              In the previous example the board asked a website for data, here the board is the one being asked.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

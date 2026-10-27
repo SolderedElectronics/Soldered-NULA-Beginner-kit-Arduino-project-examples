@@ -8,7 +8,7 @@
  *
  *              For wiring details, circuit diagram, and more, check out the example
  *              documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 

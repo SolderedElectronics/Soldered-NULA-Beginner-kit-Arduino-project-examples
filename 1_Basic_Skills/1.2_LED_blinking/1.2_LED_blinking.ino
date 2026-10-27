@@ -4,7 +4,7 @@
  * @file        1.2_LED_blinking.ino
  * @brief       Example that shows how to control the blinking of a simple LED.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
- * @author      Soldered
+ * @author      Josip Šimun Kuči @ soldered.com
  ***************************************************
  */
 
