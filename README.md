@@ -101,8 +101,8 @@ explaining the same thing twice.
 There are 22 examples across seven sections. Sections 1 to 6 each teach one new thing at a time. Section 7 combines
 what you have learned into finished projects.
 
-Examples that have an "On your own" task in the manual also have a worked solution next to them, in a folder
-with the same name plus `_on_your_own`.
+Examples that have an "On your own" task in the manual also have a worked solution inside their folder, in a subfolder
+named after the example plus `_on_your_own`.
 
 ### 1. Basic skills
 

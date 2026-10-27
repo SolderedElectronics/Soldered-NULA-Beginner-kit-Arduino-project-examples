@@ -2,10 +2,8 @@
  **************************************************
  *
  * @file        4.2_Auto_Scroll_Text_on_your_own.ino
- * @brief       Example that shows how to automatically scroll text on a 16x2 LCD.
- *              The LCD is controlled using the Soldered LCD library.
- *              This example demonstrates how to use lcd.scrollDisplayLeft() and lcd.scrollDisplayRight()
- *              to move text smoothly across the screen.
+ * @brief       Variation of the 4.2 Auto scroll text example that makes the message travel from left to right instead
+ *              of right to left.
  *              For details, connection diagram and more, check out the example documentation at: <link placeholder>
  * @author      Soldered
  ***************************************************
